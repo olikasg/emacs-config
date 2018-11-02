@@ -135,7 +135,12 @@
 
 (use-package zenburn-theme
   :ensure t
-  :pin melpa-stable)
+  :pin melpa-stable
+  :disabled t)
+
+(use-package color-theme-solarized
+  :ensure t
+  :pin melpa)
 
 (use-package hc-zenburn-theme
   :ensure t
