@@ -4,8 +4,10 @@
 ;; my computers.
 
 (when (string-equal system-type "darwin")
+  (setq ns-right-alternate-modifier (quote none))
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
+  (global-set-key "£" (lambda() (interactive) (insert ?#)))
   (global-set-key [kp-delete] 'delete-char))
 
 (if window-system
@@ -33,7 +35,7 @@
       user-login-name "olikasg"
       user-full-name "Gabor Olah")
 
-; Thanks to Niles (http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html)
+;; Thanks to Niles (http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html)
 (defun ask-before-closing ()
   "Ask whether or not to close, and then close if y was pressed"
   (interactive)
@@ -74,7 +76,7 @@
 ;(package-refresh-contents)
 
 (add-to-list 'load-path (concat
-                         (file-name-as-directory emacs-repository-path)
+ (file-name-as-directory emacs-repository-path)
                          "use-package-2.1"))
 
 (require 'use-package)
@@ -134,7 +136,8 @@
 (use-package ace-window
   :ensure t
   :pin elpa
-  :bind (("M-p" . ace-window)))
+  :bind (("M-p" . ace-window))
+  :disabled t)
 
 ;; (use-package zenburn-theme
 ;;   :ensure t
@@ -153,10 +156,12 @@
   :ensure t
   :pin melpa-stable)
 
-;; (use-package hc-zenburn-theme
-;;   :ensure t
-;;   :pin melpa-stable
-;;   :defer t)
+(use-package hc-zenburn-theme
+  :ensure t
+  :pin melpa-stable
+  :defer t
+  :init
+  (load-theme 'hc-zenburn t))
 
 (use-package edts
   :ensure t
@@ -259,6 +264,10 @@
   :interpreter
   ("scala" . scala-mode))
 
+(use-package yaml-mode
+  :ensure t
+  :pin melpa-stable)
+
 (use-package sbt-mode
   :commands sbt-start sbt-command
   :config
@@ -312,6 +321,12 @@
   :ensure t
   :config
   (company-flx-mode +1))
+
+(use-package which-key
+  :ensure t
+  :pin gnu
+  :config
+  (which-key-mode))
 
 ;; find aspell and hunspell automatically
 (cond
